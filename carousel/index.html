@@ -1,0 +1,170 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<title></title>
+	<style type="text/css">
+		@import url(https://fonts.googleapis.com/css?family=Open+Sans);
+		* { 
+		  -moz-box-sizing: border-box; 
+		  -webkit-box-sizing: border-box; 
+		  box-sizing: border-box;
+		}
+
+		body {
+		  background: #eee;
+		  font: 16px 'Open Sans', sans-serif; color: #fff;
+		  padding: 50px;
+		}
+
+		.container {
+		  width: 620px;
+		  margin: 0 auto;
+		}
+		 
+		.slideshow { 
+		  margin: 0 0 30px 0;
+		  position: relative;
+		  width: 600px; height: 400px;
+		}
+		    
+		.slide { 
+		  box-shadow: 0 0 5px #aaaaaa;
+		  position: absolute;
+		  opacity: 0;
+		  z-index: 9;
+		  
+		  img {
+		    width: 600px; height: 400px;
+		    overflow: hidden;
+		  }
+		  
+		  span {
+		    background: rgba(0,0,0,0.5);
+		    bottom: 10px; left: 10px;
+		    display: block;
+		    padding: 15px 0;
+		    position: absolute;
+		    overflow: hidden;
+		    text-align: center;
+		    width: 600px;
+		  }
+		}
+
+		.active { 
+		  background: #fff;
+		  display: block; 
+		  opacity: 1;
+		  padding: 10px 10px 5px 10px;
+		  transition: opacity 1s ease;
+		  z-index: 10;
+		}
+
+		.controls {
+		  text-align: right;
+		  
+		  a {
+		    cursor: pointer;
+		    display: block; 
+		    float: right;
+		    width: 32px; height: 32px;
+		    text-indent: 100%;
+		    white-space: nowrap;
+		    overflow: hidden;
+		  }
+		}
+
+		img{
+			width: 100%;
+		}
+
+		.next {
+		  background: red;
+		}
+
+		.prev {
+		  background: red;
+		}
+
+	</style>
+</head>
+<body>
+	<div class="container">
+
+  <div class="slideshow">  
+    
+    <div class="slide active">
+      <img src="https://images.unsplash.com/photo-1593642532744-d377ab507dc8?ixid=MnwxMjA3fDF8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&ixlib=rb-1.2.1&auto=format&fit=crop&w=750&q=80" alt="New York City" title="New York City" />
+      <span>Caption #1 - New York City</span>
+    </div>
+    
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1593642702821-c8da6771f0c6?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=889&q=80" alt="Paris Metro" title="Paris Metro" />
+      <span>Caption #2 - Paris Metro</span>
+    </div>
+  
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1593642634315-48f5414c3ad9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80" alt="Central Stockholm" title="Central Stockholm" />
+      <span>Caption #3 - Central Stockholm</span>
+    </div>
+    
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1593642634402-b0eb5e2eebc9?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=750&q=80" alt="Snow Leopard" alt="Snow Leopard" title="Snow Leopard" />
+      <span>Caption #4 - Snow Leopard</span> 
+    </div>
+    
+    <div class="slide">
+      <img src="https://images.unsplash.com/photo-1593642634443-44adaa06623a?ixlib=rb-1.2.1&ixid=MnwxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8&auto=format&fit=crop&w=625&q=80" alt="Popsicles" title="Popsicles" /> 
+      <span>Caption #5 - Popsicles</span>
+    </div>
+  </div>
+
+  <div class="controls">
+    <a class="next">Next Slide</a>
+    <a class="prev">Previous Slide</a>
+  </div>
+</div>
+
+<script src="https://code.jquery.com/jquery-3.6.0.min.js" integrity="sha256-/xUj+3OJU5yExlq6GSYGSHk7tPXikynS7ogEvDej/m4=" crossorigin="anonymous"></script>
+
+<script type="text/javascript">
+	$.fn.nextOrFirst = function(selector){
+  var next = this.next(selector);
+  return (next.length) ? next : this.prevAll(selector).last();
+};
+
+$.fn.prevOrLast = function(selector){
+  var prev = this.prev(selector);
+  return (prev.length) ? prev : this.nextAll(selector).last();
+};
+
+function slider() {    
+  var activeSlide = $(".active");
+  
+  activeSlide                  
+    .removeClass("active")        
+    .nextOrFirst()                     
+    .addClass("active");
+}
+setInterval(slider, 6000);
+
+function controls() {   
+  var control = $(".controls");
+  
+  control.on('click', '.prev', function() {
+    $(".active")
+    .removeClass("active")
+    .prevOrLast()
+    .addClass("active");
+   });
+  
+  control.on('click', '.next', function() {
+    $(".active")
+    .removeClass("active")
+    .nextOrFirst()
+    .addClass("active");   
+   }); 
+ }
+controls();
+</script>
+</body>
+</html>
